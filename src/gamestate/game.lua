@@ -1,10 +1,12 @@
 local gamestate = require "src.lib.gamestate"
+require "src.wave"
 
 local game = {}
 
 local physicsWorld = {}
 
 local gameCanvas = love.graphics.newCanvas()
+local gameTime;
 
 function game:enter() 
     circle = {
@@ -12,16 +14,31 @@ function game:enter()
                y = 100,
                r = 20
              }
+    gameTime = 0;
+    
+    --Testing waves
+    waves = { }
+    testWaveTable = {{releaseTime=0.5, track=1, speed=100}, {releaseTime=1.5, track=1, speed=200}, {releaseTime=2.0,track=1, speed=300}}
 end
 
+
 function game:update(dt)
+    --Waves
+    gameTime = gameTime+dt
+    updateWaves(waves, testWaveTable, gameTime, dt)
+    
+	--Teste
     love.graphics.setCanvas(gameCanvas)
-        love.graphics.circle("fill", circle.x, circle.y, circle.r)
+    love.graphics.clear()
+    love.graphics.circle("fill", circle.x, circle.y, circle.r)
+    drawWaves(waves)
     love.graphics.setCanvas()
+   
+    
 end
 
 function game:draw()
-    love.graphics.print(love.timer.getFPS(), 0, 0)
+    love.graphics.print(gameTime, 0, 0)
     love.graphics.draw(gameCanvas)
 end
 
