@@ -3,7 +3,7 @@ local game = require 'src.gamestate.game'
 
 function love.load()
     love.math.setRandomSeed(os.clock())
-    love.graphics.setDefaultFilter("nearest", "nearest")
+    --love.graphics.setDefaultFilter("nearest", "nearest")
     gamestate.registerEvents()
     gamestate.switch(game)
 end

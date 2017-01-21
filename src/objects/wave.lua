@@ -1,12 +1,14 @@
-function newWave(track, speed, scale)
+function newWave(track, speed, scale, color)
 	wave = {}
 	wave.track = track
 	wave.pathTable = getPathTable(track)
-	wave.img = love.graphics.newImage("assets/waves/wave" .. track .. ".png")
 	wave.x = wave.pathTable[1]
 	wave.y = wave.pathTable[2]
 	wave.speed = speed
-	
+	wave.img = {}
+    for i=1,60,1 do
+        wave.img[i] = love.graphics.newImage("assets/"..color.."/ONDA1000"..string.format("%02d",i)..".png")
+    end
 	--
 	wave.currentStep = 1;
 	wave.currentDistance = 0;
@@ -22,7 +24,7 @@ function updateWaves(waves, waveTable, currentTime, dt)
 	--Verifica se existe uma nova onda para ser solta
 	if #waveTable > 0 then
 		if waveTable[1].releaseTime <= currentTime then
-			table.insert(waves, newWave(waveTable[1].track, waveTable[1].speed, 1)) --Solta nova onda
+			table.insert(waves, newWave(waveTable[1].track, waveTable[1].speed, 0.5, "amarelo")) --Solta nova onda
 			table.remove(waveTable, 1)
 		end
 	end
@@ -51,10 +53,11 @@ function updateWaves(waves, waveTable, currentTime, dt)
 end
 
 --Desenha ondas
-function drawWaves(waves)
+function drawWaves(waves, gametime)
     love.graphics.setColor(255, 255, 255)
     for i = 1, #waves do
-        love.graphics.draw(waves[i].img, waves[i].x, waves[i].y, math.atan(waves[i].currentDirection[2]/waves[i].currentDirection[1]), waves[i].scale, waves[i].scale, waves[i].img:getWidth()/2, waves[i].img:getWidth()/2)
+        local k = math.ceil(60*gametime % 60)
+        love.graphics.draw(waves[i].img[k], waves[i].x, waves[i].y, math.atan(waves[i].currentDirection[2]/waves[i].currentDirection[1]), waves[i].scale, waves[i].scale, (waves[i].img[k]:getWidth()*waves[i].scale)/2, (waves[i].img[k]:getWidth()*waves[i].scale)/2)
     end
 end
 
