@@ -25,18 +25,18 @@ local function getPaths()
 end
 
 function map:init()
-    map.towers = getTowers()
-    map.paths = getPaths()
+    self.towers = getTowers()
+    self.paths = getPaths()
 end
 
 function map:render()
     --Renders the towers
-    for i,j in ipairs(map.towers) do
+    for i,j in ipairs(self.towers) do
         love.graphics.circle("fill", j.x, j.y, 10)
     end
     --Renders the paths
-    for i,j in ipairs(map.paths) do
-        love.graphics.setColor(map.paths.colors[i])
+    for i,j in ipairs(self.paths) do
+        love.graphics.setColor(self.paths.colors[i])
         love.graphics.line(j)
     end
     love.graphics.setColor(255,255,255)

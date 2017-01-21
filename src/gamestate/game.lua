@@ -38,7 +38,7 @@ function game:update(dt)
     love.graphics.clear()
 
     map:render()
-    drawWaves(waves)
+    drawWaves(waves, gameTime)
     bar:render()
 
     love.graphics.setCanvas()

@@ -1,4 +1,4 @@
-function newWave(track, speed, scale)
+function newWave(track, speed, scale, color)
 	wave = {}
 	wave.track = track
 	wave.trackTable = getTrackTable(track)
@@ -13,7 +13,10 @@ function newWave(track, speed, scale)
 	wave.finalDistance = getWaveDistance(wave.trackTable[1], wave.trackTable[2])
 	
 	--
-	wave.img = love.graphics.newImage("assets/waves/wave" .. track .. ".png")
+    wave.img = {}
+    for i=1,60,1 do
+        wave.img[i] = love.graphics.newImage("assets/"..color.."/ONDA1000"..string.format("%02d",i)..".png")
+    end
 	wave.scale = scale
 	return wave
 end
@@ -23,7 +26,7 @@ function updateWaves(waves, waveTable, currentTime, dt)
 	if #waveTable > 0 then
 		if waveTable[1].releaseTime <= currentTime then
 			print("kk")
-			table.insert(waves, newWave(waveTable[1].track, waveTable[1].speed, 1)) --Solta nova onda
+			table.insert(waves, newWave(waveTable[1].track, waveTable[1].speed, 1, "amarelo")) --Solta nova onda
 			table.remove(waveTable, 1)
 		end
 	end
@@ -59,10 +62,10 @@ function updateWaves(waves, waveTable, currentTime, dt)
 end
 
 
-function drawWaves(waves)
+function drawWaves(waves, gametime)
     love.graphics.setColor(255, 255, 255)
     for i = 1, #waves do
-        love.graphics.draw(waves[i].img, waves[i].x, waves[i].y, 0, waves[i].scale, waves[i].scale)
+        love.graphics.draw(waves[i].img[math.ceil(60*gametime % 60)], waves[i].x, waves[i].y, 0, waves[i].scale, waves[i].scale)
     end
 end
 
