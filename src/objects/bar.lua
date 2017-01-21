@@ -1,5 +1,12 @@
-interference = 0
-function love.update(dt)
+local bar = {}
+local interference = 0
+
+function bar:init()
+    barimage = love.graphics.newImage("assets/color-bar.jpg")
+    quad = love.graphics.newQuad(0, 0, interference, 49, barimage:getWidth(), barimage:getHeight())
+end
+
+function bar:update(dt)
     if interference > 0 then
         interference = interference - 0.2
     end
@@ -8,10 +15,13 @@ function love.update(dt)
             interference = interference + 2
         end
     end
-    quad = love.graphics.newQuad(0, 0, interference, 49, barimage:getWidth(), barimage:getHeight())
+    quad = love.graphics.newQuad(0, 0, interference, 30, barimage:getWidth(), barimage:getHeight())
 end
-function love.draw()
+
+function bar:render()
     love.graphics.setColor(255, 255, 255)
-    love.graphics.rectangle("line", 100, 500, 600, 50)
-    love.graphics.draw(barimage, quad, 100, 500)
+    love.graphics.rectangle("line", 100, 550, 600, 30)
+    love.graphics.draw(barimage, quad, 100, 550)
 end
+
+return bar

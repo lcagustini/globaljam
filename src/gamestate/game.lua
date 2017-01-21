@@ -11,6 +11,10 @@ function game:enter()
     map = require "src.objects.map"
     map:init()
 
+    --Initialize bar object
+    bar = require 'src.objects.bar'
+    bar:init()
+
     --Path width
     love.graphics.setLineWidth(5)
 
@@ -27,12 +31,15 @@ function game:update(dt)
     gameTime = gameTime+dt
     updateWaves(waves, testWaveTable, gameTime, dt)
 
+    bar:update(dt)
+
     --Drawing
     love.graphics.setCanvas(gameCanvas)
     love.graphics.clear()
 
-    drawWaves(waves)
     map:render()
+    drawWaves(waves)
+    bar:render()
 
     love.graphics.setCanvas()
 end
