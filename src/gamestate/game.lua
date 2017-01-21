@@ -1,5 +1,5 @@
 local gamestate = require "src.lib.gamestate"
-require "src.wave"
+require "src.objects.wave"
 
 local game = {}
 
