@@ -3,18 +3,16 @@ require "src.wave"
 
 local game = {}
 
-local physicsWorld = {}
-
 local gameCanvas = love.graphics.newCanvas()
 local gameTime;
 
-function game:enter() 
-    circle = {
-               x = 100,
-               y = 100,
-               r = 20
-             }
-    gameTime = 0;
+function game:enter()
+    map = require "src.objects.map"
+    map:init()
+
+    love.graphics.setLineWidth(5)
+  
+      gameTime = 0;
     
     --Testing waves
     waves = { }
@@ -29,9 +27,19 @@ function game:update(dt)
     
 	--Teste
     love.graphics.setCanvas(gameCanvas)
+  
     love.graphics.clear()
-    love.graphics.circle("fill", circle.x, circle.y, circle.r)
     drawWaves(waves)
+
+    for i,j in ipairs(map.towers) do
+        love.graphics.circle("fill", j.x, j.y, 10)
+    end
+    for i,j in ipairs(map.paths) do
+        love.graphics.setColor(map.paths.colors[i])
+        love.graphics.line(j)
+    end
+    love.graphics.setColor(255,255,255)
+
     love.graphics.setCanvas()
    
     
