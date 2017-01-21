@@ -1,6 +1,5 @@
 function love.conf(t)
     t.window.title = "Global Jam"
-    t.identity = "globaljam"
     t.window.fullscreen = false
     t.window.vsync = false
 
