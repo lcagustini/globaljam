@@ -2,21 +2,25 @@ local gamestate = require "src.lib.gamestate"
 
 local game = {}
 
-local physicsWorld = {}
-
 local gameCanvas = love.graphics.newCanvas()
 
-function game:enter() 
-    circle = {
-               x = 100,
-               y = 100,
-               r = 20
-             }
+function game:enter()
+    map = require "src.objects.map"
+    map:init()
+
+    love.graphics.setLineWidth(5)
 end
 
 function game:update(dt)
     love.graphics.setCanvas(gameCanvas)
-        love.graphics.circle("fill", circle.x, circle.y, circle.r)
+    for i,j in ipairs(map) do
+        love.graphics.circle("fill", j.x, j.y, 10)
+    end
+    for i,j in ipairs(map.paths) do
+        love.graphics.setColor(map.paths.colors[i])
+        love.graphics.line(j)
+    end
+    love.graphics.setColor(255,255,255)
     love.graphics.setCanvas()
 end
 
