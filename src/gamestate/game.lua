@@ -13,7 +13,7 @@ end
 
 function game:update(dt)
     love.graphics.setCanvas(gameCanvas)
-    for i,j in ipairs(map) do
+    for i,j in ipairs(map.towers) do
         love.graphics.circle("fill", j.x, j.y, 10)
     end
     for i,j in ipairs(map.paths) do
