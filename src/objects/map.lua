@@ -18,7 +18,6 @@ local function getPaths()
     --Corner rounded paths with unique colors
     paths[1] = cr.tranform_line_points({200,600, 200,500, 400,500, 400,200, 800,200}, 20)
     paths.colors[1] = {0,255,0}
-
     paths[2] = cr.tranform_line_points({450,600, 450,400, 100,400, 100,250, 150,250, 150,0}, 20)
     paths.colors[2] = {255,0,0}
 
