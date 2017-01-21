@@ -2,16 +2,16 @@ function newWave(track, speed, scale, color)
 	wave = {}
 	wave.track = track
 	wave.pathTable = getPathTable(track)
-	wave.x = wave.pathTable[1]
-	wave.y = wave.pathTable[2]
 	wave.speed = speed
 	wave.img = {}
     for i=1,60,1 do
         wave.img[i] = love.graphics.newImage("assets/"..color.."/ONDA1000"..string.format("%02d",i)..".png")
     end
+	wave.x = wave.pathTable[1]
+	wave.y = wave.pathTable[2]
 	--
 	wave.currentStep = 1;
-	wave.currentDistance = 0;
+	wave.currentDistance = 1;
 	wave.currentDirection = getWaveDirection(wave.pathTable, 1)
 	wave.finalDistance = getWaveDistance(wave.pathTable, 1)
 	
@@ -29,6 +29,7 @@ function updateWaves(waves, waveTable, currentTime, dt)
 		end
 	end
 
+    local removal = {}
 	--Atualiza posição das ondas e seu step atual
 	for i=1, #waves do
 		--Atualiza posição
@@ -39,9 +40,12 @@ function updateWaves(waves, waveTable, currentTime, dt)
 		--Atualiza step
 		waves[i].currentDistance = waves[i].currentDistance + movementSize;
 		if waves[i].currentDistance >= waves[i].finalDistance then
+            local distanceCorrection = waves[i].currentDistance-waves[i].finalDistance
+            waves[i].x = waves[i].x - distanceCorrection*waves[i].currentDirection[1]
+            waves[i].y = waves[i].y - distanceCorrection*waves[i].currentDirection[2]
 			waves[i].currentStep = waves[i].currentStep+1
-			if (waves[i].currentStep)*2 > #(waves[i].pathTable)-1 then
-				table.remove(waves, i)
+			if (waves[i].currentStep)*2+1 > #(waves[i].pathTable) then
+                removal[#removal+1] = i
 			else
 				waves[i].currentDistance = 0
 				waves[i].currentDirection = getWaveDirection(waves[i].pathTable, waves[i].currentStep)
@@ -49,15 +53,17 @@ function updateWaves(waves, waveTable, currentTime, dt)
 			end
 		end
 	end
-
+    for i=1, #removal do
+		table.remove(waves, removal[i])
+    end
 end
 
 --Desenha ondas
 function drawWaves(waves, gametime)
     love.graphics.setColor(255, 255, 255)
     for i = 1, #waves do
-        local k = math.ceil(60*gametime % 60)
-        love.graphics.draw(waves[i].img[k], waves[i].x, waves[i].y, math.atan(waves[i].currentDirection[2]/waves[i].currentDirection[1]), waves[i].scale, waves[i].scale, (waves[i].img[k]:getWidth()*waves[i].scale)/2, (waves[i].img[k]:getWidth()*waves[i].scale)/2)
+        local k = math.ceil(#waves[i].img*gametime % #waves[i].img)
+        love.graphics.draw(waves[i].img[k], waves[i].x, waves[i].y, math.atan(waves[i].currentDirection[2]/waves[i].currentDirection[1]), waves[i].scale, waves[i].scale, waves[i].img[k]:getWidth(), waves[i].img[k]:getHeight()/2)
     end
 end
 
