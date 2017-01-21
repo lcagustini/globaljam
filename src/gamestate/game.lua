@@ -11,6 +11,9 @@ function game:enter()
     map = require "src.objects.map"
     map:init()
 
+    psystem = require "src.objects.psystem"
+    psystem:init()
+
     --Initialize bar object
     bar = require 'src.objects.bar'
     bar:init()
