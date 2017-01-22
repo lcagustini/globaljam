@@ -26,7 +26,7 @@ function game:enter()
     --Testing waves
     waves = { }
 
-    waveTable = loadF("src\\levels\\1")
+    waveTable = loadF("src/levels/1")
 end
 
 function game:update(dt)
@@ -75,11 +75,17 @@ amareloWaveImg = {}
 azulWaveImg = {}
 vermelhoWaveImg = {}
 laranjaWaveImg = {}
+verdeWaveImg = {}
 function loadWaveImages()
     --Yellow
     files = love.filesystem.getDirectoryItems("assets/amarelo")
     for i=1,#files do
         amareloWaveImg[i] = love.graphics.newImage("assets/amarelo/"..files[i])
+    end
+    --Green
+    files = love.filesystem.getDirectoryItems("assets/verde")
+    for i=1,#files do
+        verdeWaveImg[i] = love.graphics.newImage("assets/verde/"..files[i])
     end
     --Blue
     files = love.filesystem.getDirectoryItems("assets/azul")
