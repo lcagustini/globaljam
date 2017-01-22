@@ -27,10 +27,14 @@ function map:init()
     self.paths = getPaths()
 end
 
-function map:collision(waves)
+function map:collision(waves, bar)
     for i=1,#self.towers do
         for j=1,#waves do
-            
+            if self.towers[i].state then
+                if (waves[j].x-self.towers[i].x)^2 + (waves[j].y-self.towers[i].y)^2 < 5625 then
+                    bar:increase()
+                end
+            end
         end
     end
 end
@@ -41,9 +45,7 @@ function map:render(dt)
     towers:renderInterference(self.towers, dt)
 
     --Renders the towers
-    for i,j in ipairs(self.towers) do
-        love.graphics.circle("fill", j.x, j.y, 10)
-    end
+    towers:renderTowers(self.towers)
 
     love.graphics.setLineWidth(5)
     --Renders the paths

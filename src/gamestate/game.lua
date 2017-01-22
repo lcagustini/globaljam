@@ -1,6 +1,7 @@
 local gamestate = require "src.lib.gamestate"
 require "src.objects.wave"
 require "src.lib.table_file"
+local gameover = require "src.gamestate.gameover"
 
 local game = {}
 
@@ -25,7 +26,7 @@ function game:enter()
     --Testing waves
     waves = { }
 
-    waveTable = loadF("src/levels/1")
+    waveTable = loadF("src\\levels\\1")
 end
 
 function game:update(dt)
@@ -33,7 +34,11 @@ function game:update(dt)
     gameTime = gameTime+dt
     updateWaves(waves, waveTable, gameTime, dt)
 
-    bar:update(dt)
+    map:collision(waves, bar)
+
+    if bar:update(dt) then
+        gamestate.switch(gameover)
+    end
 
     --Drawing
     love.graphics.setCanvas(gameCanvas)
@@ -59,7 +64,6 @@ function game:mousepressed(x, y, button, istouch)
             end
         end
     end
-    print(offTowers)
 end
 
 function game:draw()

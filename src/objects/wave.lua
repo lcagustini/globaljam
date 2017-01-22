@@ -28,7 +28,7 @@ end
 function updateWaves(waves, waveTable, currentTime, dt)
     --Verifica se existe uma nova onda para ser solta
     if #waveTable > 0 then
-        if waveTable[1].releaseTime <= currentTime then
+        if waveTable[1].releaseTime +4 <= currentTime then
             local nWave = newWave(waveTable[1].track, waveTable[1].speed, 0.6, waveTable[1].color)
             table.insert(waves, nWave) --Solta nova onda
             if not table.contains(seenColors, waveTable[1].color) then

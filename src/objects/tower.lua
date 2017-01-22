@@ -47,4 +47,10 @@ function tower:renderInterference(towers, dt)
     end
 end
 
+function tower:renderTowers(towers)
+    for i,j in ipairs(towers) do
+        love.graphics.circle("fill", j.x, j.y, 10)
+    end
+end
+
 return tower
