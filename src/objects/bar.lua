@@ -2,7 +2,7 @@ local bar = {}
 local interference = 0
 
 function bar:init()
-    barimage = love.graphics.newImage("assets/color-bar.jpg")
+    barimage = love.graphics.newImage("assets/barrinha.png")
     quad = love.graphics.newQuad(0, 0, interference, 49, barimage:getWidth(), barimage:getHeight())
 end
 

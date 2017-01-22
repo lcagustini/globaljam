@@ -2,6 +2,7 @@ local gamestate = require "src.lib.gamestate"
 require "src.objects.wave"
 require "src.lib.table_file"
 local gameover = require "src.gamestate.gameover"
+local win = require "src.gamestate.win"
 
 local game = {}
 
@@ -36,6 +37,9 @@ function game:update(dt)
 
     map:collision(waves, bar)
 
+    if #waves == 0 and #waveTable == 0 then
+        gamestate.switch(win)
+    end
     if bar:update(dt) then
         gamestate.switch(gameover)
     end
