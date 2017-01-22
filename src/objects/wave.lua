@@ -76,14 +76,14 @@ function drawWaves(waves, gametime)
         local k = math.ceil(#waves[i].img*gametime % #waves[i].img)
         local waveRotation = math.atan(waves[i].currentDirection[2]/waves[i].currentDirection[1])
         if waves[i].currentDirection[2] < 0 and waves[i].currentDirection[1] < 0 then
-			waveRotation = math.pi + waveRotation
-		end
+            waveRotation = math.pi + waveRotation
+        end
         if waves[i].currentDirection[2] > 0 and waves[i].currentDirection[1] < 0 then
-			waveRotation = math.pi + waveRotation
-		end
-		if waves[i].currentDirection[2] == 0 and waves[i].currentDirection[1] < 0 then
-			waveRotation = math.pi
-		end
+            waveRotation = math.pi + waveRotation
+        end
+        if waves[i].currentDirection[2] == 0 and waves[i].currentDirection[1] < 0 then
+            waveRotation = math.pi
+        end
         love.graphics.draw(waves[i].img[k], waves[i].x, waves[i].y, waveRotation, waves[i].scale, waves[i].scale, waves[i].img[k]:getWidth(), waves[i].img[k]:getHeight()/2)
     end
 end
