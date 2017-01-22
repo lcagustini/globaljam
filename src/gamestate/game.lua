@@ -11,6 +11,8 @@ local gameTime
 local offTowers = 0
 
 function game:enter()
+    background = love.graphics.newImage("assets/back.png")
+
     --Initialize map with towers and paths
     map = require "src.objects.map"
     map:init()
@@ -48,6 +50,7 @@ function game:update(dt)
     love.graphics.setCanvas(gameCanvas)
     love.graphics.clear()
 
+    love.graphics.draw(background, 0 ,0)
     map:render(dt)
     drawWaves(waves, gameTime)
     bar:render()
