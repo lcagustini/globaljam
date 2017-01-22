@@ -10,7 +10,7 @@ function loadF(filename)
     end
   end
   file:close()
-  
+
   return table_waves
 end
 

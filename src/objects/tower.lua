@@ -38,6 +38,13 @@ function tower:renderInterference(towers, dt)
             end
         end
     end
+    for i=1,#towers do
+        for j=1,#towers[i].i do
+            if towers[i].i[j].o < 0 then
+                table.remove(towers[i].i, j)
+            end
+        end
+    end
 end
 
 return tower
