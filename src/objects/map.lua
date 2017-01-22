@@ -31,7 +31,7 @@ function map:collision(waves, bar)
     for i=1,#self.towers do
         for j=1,#waves do
             if self.towers[i].state then
-                if (waves[j].x-self.towers[i].x)^2 + (waves[j].y-self.towers[i].y)^2 < 5625 then
+                if (waves[j].x-self.towers[i].x)^2 + (waves[j].y-self.towers[i].y)^2 < 7225 then
                     bar:increase()
                 end
             end
