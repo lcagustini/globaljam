@@ -30,7 +30,7 @@ end
 
 function bar:increase()
     if interference < 560 then
-        interference = interference + 1.6
+        interference = interference + 0.3
     end
 end
 
