@@ -75,14 +75,17 @@ function drawWaves(waves, gametime)
     love.graphics.setColor(255, 255, 255)
     for i = 1, #waves do
         local k = math.ceil(#waves[i].img*gametime % #waves[i].img)
-        local newAngle = math.atan(waves[i].currentDirection[2]/waves[i].currentDirection[1])
-        if waves[i].currentDirection[1] < 0 then
-            newAngle = -newAngle
-        end
-        if waves[i].currentDirection[1] < 0 and waves[i].currentDirection[2] == 0 then
-            newAngle = math.pi
-        end
-        love.graphics.draw(waves[i].img[k], waves[i].x, waves[i].y, newAngle, waves[i].scale, waves[i].scale, waves[i].img[k]:getWidth(), waves[i].img[k]:getHeight()/2)
+        local waveRotation = math.atan(waves[i].currentDirection[2]/waves[i].currentDirection[1])
+        if waves[i].currentDirection[2] < 0 and waves[i].currentDirection[1] < 0 then
+			waveRotation = math.pi + waveRotation
+		end
+        if waves[i].currentDirection[2] > 0 and waves[i].currentDirection[1] < 0 then
+			waveRotation = math.pi + waveRotation
+		end
+		if waves[i].currentDirection[2] == 0 and waves[i].currentDirection[1] < 0 then
+			waveRotation = math.pi
+		end
+        love.graphics.draw(waves[i].img[k], waves[i].x, waves[i].y, waveRotation, waves[i].scale, waves[i].scale, waves[i].img[k]:getWidth(), waves[i].img[k]:getHeight()/2)
     end
 end
 
