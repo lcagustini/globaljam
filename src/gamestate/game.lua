@@ -3,15 +3,19 @@ require "src.objects.wave"
 require "src.lib.table_file"
 local gameover = require "src.gamestate.gameover"
 local win = require "src.gamestate.win"
+local pause = require "src.gamestate.pause"
 
 local game = {}
 
 local gameCanvas = love.graphics.newCanvas()
 local gameTime
 local offTowers = 0
+local menu
 
-function game:enter()
+function game:enter(cur)
+    menu = cur
     background = love.graphics.newImage("assets/back.png")
+    pauseButton = love.graphics.newImage("assets/pauseb.png")
 
     --Initialize map with towers and paths
     map = require "src.objects.map"
@@ -48,12 +52,20 @@ function game:update(dt)
 
     --Drawing
     love.graphics.setCanvas(gameCanvas)
+    if love.mouse.isDown(1) then
+        local x = love.mouse.getX()
+        local y = love.mouse.getY()
+        if x > 20 and x < 20+pauseButton:getWidth() and y > 550 and y < 550+pauseButton:getHeight() then
+            gamestate.push(pause, gameCanvas, menu, info)
+        end
+    end
     love.graphics.clear()
 
     love.graphics.draw(background, 0 ,0)
     map:render(dt)
     drawWaves(waves, gameTime)
     bar:render()
+    love.graphics.draw(pauseButton, 20, 550)
 
     love.graphics.setCanvas()
 end
