@@ -20,6 +20,8 @@ local function getPaths()
     paths.colors[1] = {0,255,0}
     paths[2] = cr.tranform_line_points({450,600, 450,400, 100,400, 100,250, 150,250, 150,0}, 20)
     paths.colors[2] = {255,0,0}
+    paths[3] = cr.tranform_line_points({800,400, 600,400, 600,500, 700,500, 700,0}, 20)
+    paths.colors[3] = {0,0,255}
 
     return paths
 end
