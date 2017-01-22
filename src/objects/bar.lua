@@ -11,7 +11,7 @@ function bar:update(dt)
         interference = interference - 0.2
     end
     if love.keyboard.isDown('space') then
-        if interference < 599 then
+        if interference < 560 then
             interference = interference + 2
         end
     end
@@ -20,8 +20,8 @@ end
 
 function bar:render()
     love.graphics.setColor(255, 255, 255)
-    love.graphics.rectangle("line", 100, 550, 600, 30)
-    love.graphics.draw(barimage, quad, 100, 550)
+    love.graphics.rectangle("line", 120, 550, 560, 30)
+    love.graphics.draw(barimage, quad, 120, 550)
 end
 
 return bar
