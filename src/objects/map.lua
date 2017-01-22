@@ -40,13 +40,6 @@ function map:collision(waves, bar)
 end
 
 function map:render(dt)
-    love.graphics.setLineWidth(2)
-    --Renders the interference
-    towers:renderInterference(self.towers, dt)
-
-    --Renders the towers
-    towers:renderTowers(self.towers)
-
     love.graphics.setLineWidth(5)
     --Renders the paths
     for i,j in ipairs(self.paths) do
@@ -54,6 +47,13 @@ function map:render(dt)
         love.graphics.line(j)
     end
     love.graphics.setColor(255,255,255)
+
+    love.graphics.setLineWidth(2)
+    --Renders the interference
+    towers:renderInterference(self.towers, dt)
+
+    --Renders the towers
+    towers:renderTowers(self.towers)
 end
 
 return map
