@@ -16,6 +16,8 @@ function game:enter(cur)
     menu = cur
     background = love.graphics.newImage("assets/back.png")
     pauseButton = love.graphics.newImage("assets/pauseb.png")
+    music = love.audio.newSource("assets/sound/all.mp3", "stream")
+    music:setLooping(true)
 
     --Initialize map with towers and paths
     map = require "src.objects.map"
@@ -34,6 +36,7 @@ function game:enter(cur)
     waves = { }
 
     waveTable = loadF("src/levels/1")
+    music:play()
 end
 
 function game:update(dt)
@@ -88,6 +91,10 @@ end
 function game:draw()
     love.graphics.print(love.timer.getFPS(), 0, 0)
     love.graphics.draw(gameCanvas)
+end
+
+function game:leave()
+    love.audio.stop()
 end
 
 amareloWaveImg = {}

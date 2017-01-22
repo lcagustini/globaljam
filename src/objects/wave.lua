@@ -11,7 +11,7 @@ function newWave(track, speed, scale, color)
     for i=1, #(_G[color.."WaveImg"]) do
         wave.img[i] = _G[color.."WaveImg"][i]
     end
-    wave.sound = love.audio.newSource("assets/sound/"..color..".wav", "stream")
+    wave.sound = love.audio.newSource("assets/sound/"..color..".mp3", "stream")
     wave.x = wave.pathTable[1]
     wave.y = wave.pathTable[2]
     --
@@ -34,7 +34,7 @@ function updateWaves(waves, waveTable, currentTime, dt)
             if not table.contains(seenColors, waveTable[1].color) then
                 table.insert(seenColors, waveTable[1].color)
                 nWave.sound:setLooping(true)
-                nWave.sound:play()
+                --nWave.sound:play()
             end
             table.remove(waveTable, 1)
         end
