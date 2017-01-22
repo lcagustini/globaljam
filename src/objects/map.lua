@@ -2,10 +2,17 @@ local map = {}
 
 local function getTowers()
     local towers = {}
-    --Creates towers in random places
-    for i=1,15,1 do
-        towers[i] = {x = love.math.random(800), y = love.math.random(600)}
-    end
+    --Creates towers
+    
+      towers[1] = {x = 170, y = 120}
+      towers[2] = {x = 250, y = 380}
+      towers[3] = {x = 360, y = 440}
+      towers[4] = {x = 370, y = 212}
+      towers[5] = {x = 550, y = 337}
+      towers[6] = {x = 650, y = 450}
+      towers[7] = {x = 650, y = 75}
+      towers[8] = {x = 750, y = 225}
+    
     return towers
 end
 
@@ -16,13 +23,17 @@ local function getPaths()
     paths.colors = {}
 
     --Corner rounded paths with unique colors
-    paths[1] = cr.tranform_line_points({200,600, 200,500, 400,500, 400,200, 800,200}, 20)
-    paths.colors[1] = {249,174,0}
-    paths[2] = cr.tranform_line_points({450,600, 450,400, 100,400, 100,250, 150,250, 150,0}, 20)
-    paths.colors[2] = {255,0,0}
-    paths[3] = cr.tranform_line_points({800,400, 600,400, 600,500, 700,500, 700,0}, 20)
-    paths.colors[3] = {0,0,255}
-
+    
+    paths[1] = cr.tranform_line_points({0,430, 300,430, 300,275, 800,275}, 30)
+    paths.colors[1] = {248,243,0}
+    paths[2] = cr.tranform_line_points({400,0, 400,400, 800,400}, 20)
+    paths.colors[2] = {30,220,0}
+    paths[3] = cr.tranform_line_points({700,0, 700,600}, 20)
+    paths.colors[3] = {255,79,0}
+    paths[4] = cr.tranform_line_points({200,0, 200,500, 800,500}, 20)
+    paths.colors[4] = {0,144,199}
+    paths[5] = cr.tranform_line_points({0,150, 600,150, 600,0}, 20)
+    paths.colors[5] = {237,8,37}
     return paths
 end
 
