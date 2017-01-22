@@ -4,36 +4,30 @@ require "src.objects.wave"
 local game = {}
 
 local gameCanvas = love.graphics.newCanvas()
-local gameTime;
+local gameTime
+local offTowers = 0
 
 function game:enter()
     --Initialize map with towers and paths
     map = require "src.objects.map"
     map:init()
 
-    psystem = require "src.objects.psystem"
-    psystem:init()
-
     --Initialize bar object
     bar = require 'src.objects.bar'
     bar:init()
 
-    --Path width
-    love.graphics.setLineWidth(5)
-
     gameTime = 0;
-    
+
     --Preloades wave images
     loadWaveImages()
 
     --Testing waves
     waves = { }
     testWaveTable = {{releaseTime=0.5, track=1, speed=100, color="laranja"},
-					 {releaseTime=1, track=1, speed=100, color="laranja"},
-                     {releaseTime=1.5, track=2, speed=100, color="vermelho"},
-                     {releaseTime=2.0, track=3, speed=100, color="azul"}}
+    {releaseTime=1, track=1, speed=100, color="laranja"},
+    {releaseTime=1.5, track=2, speed=100, color="vermelho"},
+    {releaseTime=2.0, track=3, speed=100, color="azul"}}
 end
-
 
 function game:update(dt)
     --Waves
@@ -46,11 +40,27 @@ function game:update(dt)
     love.graphics.setCanvas(gameCanvas)
     love.graphics.clear()
 
-    map:render()
+    map:render(dt)
     drawWaves(waves, gameTime)
     bar:render()
 
     love.graphics.setCanvas()
+end
+
+function game:mousepressed(x, y, button, istouch)
+    for i=1,#map.towers do
+        if (x-map.towers[i].x)^2 + (y-map.towers[i].y)^2 < 100 then
+            if offTowers < 3 or not map.towers[i].state then
+                if map.towers[i].state then
+                    offTowers = offTowers +1
+                elseif offTowers > 0 then
+                    offTowers = offTowers -1
+                end
+                map.towers[i].state = not map.towers[i].state
+            end
+        end
+    end
+    print(offTowers)
 end
 
 function game:draw()
