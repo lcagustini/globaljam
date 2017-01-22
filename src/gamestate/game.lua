@@ -1,5 +1,6 @@
 local gamestate = require "src.lib.gamestate"
 require "src.objects.wave"
+require "src.lib.table_file"
 
 local game = {}
 
@@ -23,16 +24,14 @@ function game:enter()
 
     --Testing waves
     waves = { }
-    testWaveTable = {{releaseTime=0.5, track=1, speed=100, color="laranja"},
-    {releaseTime=1, track=1, speed=100, color="laranja"},
-    {releaseTime=1.5, track=2, speed=100, color="vermelho"},
-    {releaseTime=2.0, track=3, speed=100, color="azul"}}
+
+    waveTable = loadF("src/levels/1")
 end
 
 function game:update(dt)
     --Waves
     gameTime = gameTime+dt
-    updateWaves(waves, testWaveTable, gameTime, dt)
+    updateWaves(waves, waveTable, gameTime, dt)
 
     bar:update(dt)
 
