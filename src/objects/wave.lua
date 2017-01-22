@@ -8,9 +8,8 @@ function newWave(track, speed, scale, color)
     wave.pathTable = getPathTable(track)
     wave.speed = speed
     wave.img = {}
-    files = love.filesystem.getDirectoryItems("assets/"..color)
-    for i=1,#files do
-        wave.img[i] = love.graphics.newImage("assets/"..color.."/"..files[i])
+    for i=1, #(_G[color.."WaveImg"]) do
+        wave.img[i] = _G[color.."WaveImg"][i]
     end
     wave.sound = love.audio.newSource("assets/sound/"..color..".wav", "stream")
     wave.x = wave.pathTable[1]
