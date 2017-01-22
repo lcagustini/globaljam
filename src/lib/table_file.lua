@@ -20,11 +20,11 @@ function createWave(releaseTime, track, speed)
   wave.releaseTime = tonumber(releaseTime)
   wave.track = tonumber(track)
   wave.speed = tonumber(speed)
-  if wave.track == 1 then wave.color = "amarelo"
+  if wave.track == 3 then wave.color = "amarelo"
   elseif wave.track == 2 then wave.color = "verde"
-  elseif wave.track == 3 then wave.color = "laranja"
-  elseif wave.track == 4 then wave.color = "azul"
-  elseif wave.track == 5 then wave.color = "vermelho" end
+  elseif wave.track == 1 then wave.color = "laranja"
+  elseif wave.track == 5 then wave.color = "azul"
+  elseif wave.track == 4 then wave.color = "vermelho" end
   return wave
 end
 
