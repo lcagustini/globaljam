@@ -8,10 +8,11 @@ function newWave(track, speed, scale, color)
     wave.pathTable = getPathTable(track)
     wave.speed = speed
     wave.img = {}
-    for i=1,60,1 do
-        wave.img[i] = love.graphics.newImage("assets/"..color.."/ONDA1000"..string.format("%02d",i)..".png")
+    files = love.filesystem.getDirectoryItems("assets/"..color)
+    for i=1,#files do
+        wave.img[i] = love.graphics.newImage("assets/"..color.."/"..files[i])
     end
-    wave.sound = love.audio.newSource("assets/"..color.."/sound.wav", "stream")
+    wave.sound = love.audio.newSource("assets/sound/"..color..".wav", "stream")
     wave.x = wave.pathTable[1]
     wave.y = wave.pathTable[2]
     --
@@ -29,7 +30,7 @@ function updateWaves(waves, waveTable, currentTime, dt)
     --Verifica se existe uma nova onda para ser solta
     if #waveTable > 0 then
         if waveTable[1].releaseTime <= currentTime then
-            local nWave = newWave(waveTable[1].track, waveTable[1].speed, 0.5, waveTable[1].color)
+            local nWave = newWave(waveTable[1].track, waveTable[1].speed, 0.6, waveTable[1].color)
             table.insert(waves, nWave) --Solta nova onda
             if not table.contains(seenColors, waveTable[1].color) then
                 table.insert(seenColors, waveTable[1].color)
@@ -74,7 +75,14 @@ function drawWaves(waves, gametime)
     love.graphics.setColor(255, 255, 255)
     for i = 1, #waves do
         local k = math.ceil(#waves[i].img*gametime % #waves[i].img)
-        love.graphics.draw(waves[i].img[k], waves[i].x, waves[i].y, math.atan(waves[i].currentDirection[2]/waves[i].currentDirection[1]), waves[i].scale, waves[i].scale, waves[i].img[k]:getWidth(), waves[i].img[k]:getHeight()/2)
+        local newAngle = math.atan(waves[i].currentDirection[2]/waves[i].currentDirection[1])
+        if waves[i].currentDirection[1] < 0 then
+            newAngle = -newAngle
+        end
+        if waves[i].currentDirection[1] < 0 and waves[i].currentDirection[2] == 0 then
+            newAngle = math.pi
+        end
+        love.graphics.draw(waves[i].img[k], waves[i].x, waves[i].y, newAngle, waves[i].scale, waves[i].scale, waves[i].img[k]:getWidth(), waves[i].img[k]:getHeight()/2)
     end
 end
 

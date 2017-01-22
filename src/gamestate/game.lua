@@ -25,9 +25,9 @@ function game:enter()
 
     --Testing waves
     waves = { }
-    testWaveTable = {{releaseTime=0.5, track=1, speed=100, color="amarelo"},
-                     {releaseTime=1.5, track=2, speed=100, color="amarelo"},
-                     {releaseTime=2.0, track=3, speed=100, color="amarelo"}}
+    testWaveTable = {{releaseTime=0.5, track=1, speed=100, color="laranja"},
+                     {releaseTime=1.5, track=2, speed=100, color="vermelho"},
+                     {releaseTime=2.0, track=3, speed=100, color="azul"}}
 end
 
 
