@@ -26,6 +26,7 @@ function tower:renderInterference(towers, dt)
     end
     timer = timer + dt
 
+    local removal = {}
     for i=1,#towers do
         for j=1,#towers[i].i do
             towers[i].i[j].r = towers[i].i[j].r +20*dt
@@ -36,14 +37,13 @@ function tower:renderInterference(towers, dt)
                 love.graphics.circle("line", towers[i].x, towers[i].y, towers[i].i[j].r)
                 love.graphics.setColor(255, 255, 255, 255)
             end
-        end
-    end
-    for i=1,#towers do
-        for j=1,#towers[i].i do
             if towers[i].i[j].o < 0 then
-                table.remove(towers[i].i, j)
+                table.insert(removal, {i, j})
             end
         end
+    end
+    for i=1,#removal do
+        table.remove(towers[removal[i][1]].i, removal[i][2])
     end
 end
 
