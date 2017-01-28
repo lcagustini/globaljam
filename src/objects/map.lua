@@ -1,5 +1,8 @@
 local map = {}
 local towers = require "src.objects.tower"
+local wave = require "src.objects.wave"
+
+local waves = {}
 
 local function getPaths()
     local cr = require "src.lib.cornerRounder"
@@ -22,12 +25,13 @@ local function getPaths()
     return paths
 end
 
-function map:init()
+function map:init(level, waveImg)
     self.towers = towers:getTowers()
     self.paths = getPaths()
+    wave:init(level, waveImg)
 end
 
-function map:collision(waves, bar)
+function map:collision(bar)
     for i=1,#self.towers do
         for j=1,#waves do
             if self.towers[i].state then
@@ -39,7 +43,15 @@ function map:collision(waves, bar)
     end
 end
 
-function map:render(dt)
+function map:update(dt, gameTime)
+    wave:update(waves, gameTime, dt)
+end
+
+function map:win()
+    return #waves == 0 and wave:emptyWaveTable()
+end
+
+function map:render(dt, gametime)
     love.graphics.setLineWidth(5)
     --Renders the paths
     for i,j in ipairs(self.paths) do
@@ -47,6 +59,8 @@ function map:render(dt)
         love.graphics.line(j)
     end
     love.graphics.setColor(255,255,255)
+
+    wave:render(waves, gametime)
 
     love.graphics.setLineWidth(2)
     --Renders the interference

@@ -1,6 +1,9 @@
 require "src/lib/table"
+require "src.lib.table_file"
 
-local seenColors = {}
+local wave = {}
+
+local waveImg = {}
 
 function newWave(track, speed, scale, color)
     wave = {}
@@ -8,8 +11,8 @@ function newWave(track, speed, scale, color)
     wave.pathTable = getPathTable(track)
     wave.speed = speed
     wave.img = {}
-    for i=1, #(_G[color.."WaveImg"]) do
-        wave.img[i] = _G[color.."WaveImg"][i]
+    for i=1, #(waveImg[color]) do
+        wave.img[i] = waveImg[color][i]
     end
     wave.sound = love.audio.newSource("assets/sound/"..color..".mp3", "stream")
     wave.x = wave.pathTable[1]
@@ -25,18 +28,24 @@ function newWave(track, speed, scale, color)
     return wave
 end
 
-function updateWaves(waves, waveTable, currentTime, dt)
+function wave:init(level, waveImg0)
+    self.waveTable = loadF("src/levels/"..level)
+    self.seenColors = {}
+    waveImg = waveImg0
+end
+
+function wave:update(waves, currentTime, dt)
     --Verifica se existe uma nova onda para ser solta
-    if #waveTable > 0 then
-        if waveTable[1].releaseTime +4 <= currentTime then
-            local nWave = newWave(waveTable[1].track, waveTable[1].speed, 0.6, waveTable[1].color)
+    if #self.waveTable > 0 then
+        if self.waveTable[1].releaseTime +4 <= currentTime then
+            local nWave = newWave(self.waveTable[1].track, self.waveTable[1].speed, 0.6, self.waveTable[1].color)
             table.insert(waves, nWave) --Solta nova onda
-            if not table.contains(seenColors, waveTable[1].color) then
-                table.insert(seenColors, waveTable[1].color)
+            if not table.contains(self.seenColors, self.waveTable[1].color) then
+                table.insert(self.seenColors, self.waveTable[1].color)
                 nWave.sound:setLooping(true)
                 --nWave.sound:play()
             end
-            table.remove(waveTable, 1)
+            table.remove(self.waveTable, 1)
         end
     end
 
@@ -69,8 +78,15 @@ function updateWaves(waves, waveTable, currentTime, dt)
     end
 end
 
+function wave:emptyWaveTable()
+    if #self.waveTable == 0 then
+        return true
+    end
+    return false
+end
+
 --Desenha ondas
-function drawWaves(waves, gametime)
+function wave:render(waves, gametime)
     love.graphics.setColor(255, 255, 255)
     for i = 1, #waves do
         local k = math.ceil(#waves[i].img*gametime % #waves[i].img)
@@ -108,3 +124,5 @@ end
 function getWaveDistance(pathTable, currentStep)
     return math.sqrt((pathTable[currentStep*2-1]-pathTable[currentStep*2+1])*(pathTable[currentStep*2-1]-pathTable[currentStep*2+1])+(pathTable[currentStep*2]-pathTable[currentStep*2+2])*(pathTable[currentStep*2]-pathTable[currentStep*2+2]))
 end
+
+return wave
