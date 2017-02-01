@@ -7,7 +7,6 @@ local count = 0
 
 function loading:enter(menu)
     background = love.graphics.newImage("assets/back.png")
-
 end
 
 function loading:update(dt)

@@ -21,4 +21,3 @@ function menu:mousepressed(x, y, button)
 end
 
 return menu
---527 423
